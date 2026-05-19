@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ManagerIndexRouteImport } from './routes/manager.index'
+import { Route as ManagerRestaurantsRouteImport } from './routes/manager.restaurants'
+import { Route as ManagerMapRouteImport } from './routes/manager.map'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +24,48 @@ const ManagerIndexRoute = ManagerIndexRouteImport.update({
   path: '/manager/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ManagerRestaurantsRoute = ManagerRestaurantsRouteImport.update({
+  id: '/manager/restaurants',
+  path: '/manager/restaurants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerMapRoute = ManagerMapRouteImport.update({
+  id: '/manager/map',
+  path: '/manager/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/manager/map': typeof ManagerMapRoute
+  '/manager/restaurants': typeof ManagerRestaurantsRoute
   '/manager/': typeof ManagerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/manager/map': typeof ManagerMapRoute
+  '/manager/restaurants': typeof ManagerRestaurantsRoute
   '/manager': typeof ManagerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/manager/map': typeof ManagerMapRoute
+  '/manager/restaurants': typeof ManagerRestaurantsRoute
   '/manager/': typeof ManagerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/manager/'
+  fullPaths: '/' | '/manager/map' | '/manager/restaurants' | '/manager/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/manager'
-  id: '__root__' | '/' | '/manager/'
+  to: '/' | '/manager/map' | '/manager/restaurants' | '/manager'
+  id: '__root__' | '/' | '/manager/map' | '/manager/restaurants' | '/manager/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ManagerMapRoute: typeof ManagerMapRoute
+  ManagerRestaurantsRoute: typeof ManagerRestaurantsRoute
   ManagerIndexRoute: typeof ManagerIndexRoute
 }
 
@@ -65,11 +85,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ManagerIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/manager/restaurants': {
+      id: '/manager/restaurants'
+      path: '/manager/restaurants'
+      fullPath: '/manager/restaurants'
+      preLoaderRoute: typeof ManagerRestaurantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/map': {
+      id: '/manager/map'
+      path: '/manager/map'
+      fullPath: '/manager/map'
+      preLoaderRoute: typeof ManagerMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ManagerMapRoute: ManagerMapRoute,
+  ManagerRestaurantsRoute: ManagerRestaurantsRoute,
   ManagerIndexRoute: ManagerIndexRoute,
 }
 export const routeTree = rootRouteImport
