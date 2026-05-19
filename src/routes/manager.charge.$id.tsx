@@ -37,7 +37,7 @@ function ChargeScreen() {
       p_restaurant_id: r.id,
       p_amount: num,
       p_actor_nickname: session.nickname,
-      p_memo: memo.trim() || null,
+      p_memo: memo.trim() || undefined,
     });
     if (err) {
       setError("충전에 실패했습니다.");
