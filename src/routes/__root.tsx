@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "급량비식당관리" },
+      { name: "description", content: "Internal team meal budget app for managing restaurant credit." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "급량비식당관리" },
+      { property: "og:description", content: "Internal team meal budget app for managing restaurant credit." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "급량비식당관리" },
+      { name: "twitter:description", content: "Internal team meal budget app for managing restaurant credit." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/68a8bbc0-97bd-4d80-be07-d104f11cf7a6/id-preview-51f48c9d--83f2eb7d-3033-4419-aa83-5162a2677eaf.lovable.app-1779168029982.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/68a8bbc0-97bd-4d80-be07-d104f11cf7a6/id-preview-51f48c9d--83f2eb7d-3033-4419-aa83-5162a2677eaf.lovable.app-1779168029982.png" },
     ],
     links: [
       {
