@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ManagerIndexRouteImport } from './routes/manager.index'
 import { Route as ManagerRestaurantsRouteImport } from './routes/manager.restaurants'
 import { Route as ManagerMapRouteImport } from './routes/manager.map'
+import { Route as ManagerEditIdRouteImport } from './routes/manager.edit.$id'
+import { Route as ManagerChargeIdRouteImport } from './routes/manager.charge.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +36,32 @@ const ManagerMapRoute = ManagerMapRouteImport.update({
   path: '/manager/map',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ManagerEditIdRoute = ManagerEditIdRouteImport.update({
+  id: '/manager/edit/$id',
+  path: '/manager/edit/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerChargeIdRoute = ManagerChargeIdRouteImport.update({
+  id: '/manager/charge/$id',
+  path: '/manager/charge/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/manager/map': typeof ManagerMapRoute
   '/manager/restaurants': typeof ManagerRestaurantsRoute
   '/manager/': typeof ManagerIndexRoute
+  '/manager/charge/$id': typeof ManagerChargeIdRoute
+  '/manager/edit/$id': typeof ManagerEditIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/manager/map': typeof ManagerMapRoute
   '/manager/restaurants': typeof ManagerRestaurantsRoute
   '/manager': typeof ManagerIndexRoute
+  '/manager/charge/$id': typeof ManagerChargeIdRoute
+  '/manager/edit/$id': typeof ManagerEditIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +69,34 @@ export interface FileRoutesById {
   '/manager/map': typeof ManagerMapRoute
   '/manager/restaurants': typeof ManagerRestaurantsRoute
   '/manager/': typeof ManagerIndexRoute
+  '/manager/charge/$id': typeof ManagerChargeIdRoute
+  '/manager/edit/$id': typeof ManagerEditIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/manager/map' | '/manager/restaurants' | '/manager/'
+  fullPaths:
+    | '/'
+    | '/manager/map'
+    | '/manager/restaurants'
+    | '/manager/'
+    | '/manager/charge/$id'
+    | '/manager/edit/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/manager/map' | '/manager/restaurants' | '/manager'
-  id: '__root__' | '/' | '/manager/map' | '/manager/restaurants' | '/manager/'
+  to:
+    | '/'
+    | '/manager/map'
+    | '/manager/restaurants'
+    | '/manager'
+    | '/manager/charge/$id'
+    | '/manager/edit/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/manager/map'
+    | '/manager/restaurants'
+    | '/manager/'
+    | '/manager/charge/$id'
+    | '/manager/edit/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +104,8 @@ export interface RootRouteChildren {
   ManagerMapRoute: typeof ManagerMapRoute
   ManagerRestaurantsRoute: typeof ManagerRestaurantsRoute
   ManagerIndexRoute: typeof ManagerIndexRoute
+  ManagerChargeIdRoute: typeof ManagerChargeIdRoute
+  ManagerEditIdRoute: typeof ManagerEditIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +138,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ManagerMapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/manager/edit/$id': {
+      id: '/manager/edit/$id'
+      path: '/manager/edit/$id'
+      fullPath: '/manager/edit/$id'
+      preLoaderRoute: typeof ManagerEditIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/charge/$id': {
+      id: '/manager/charge/$id'
+      path: '/manager/charge/$id'
+      fullPath: '/manager/charge/$id'
+      preLoaderRoute: typeof ManagerChargeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +160,8 @@ const rootRouteChildren: RootRouteChildren = {
   ManagerMapRoute: ManagerMapRoute,
   ManagerRestaurantsRoute: ManagerRestaurantsRoute,
   ManagerIndexRoute: ManagerIndexRoute,
+  ManagerChargeIdRoute: ManagerChargeIdRoute,
+  ManagerEditIdRoute: ManagerEditIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
