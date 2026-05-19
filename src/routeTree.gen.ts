@@ -9,15 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MemberIndexRouteImport } from './routes/member.index'
 import { Route as ManagerIndexRouteImport } from './routes/manager.index'
+import { Route as MemberHistoryRouteImport } from './routes/member.history'
 import { Route as ManagerRestaurantsRouteImport } from './routes/manager.restaurants'
 import { Route as ManagerMapRouteImport } from './routes/manager.map'
+import { Route as ManagerHistoryRouteImport } from './routes/manager.history'
 import { Route as MemberSpendIdRouteImport } from './routes/member.spend.$id'
 import { Route as ManagerEditIdRouteImport } from './routes/manager.edit.$id'
 import { Route as ManagerChargeIdRouteImport } from './routes/manager.charge.$id'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -33,6 +41,11 @@ const ManagerIndexRoute = ManagerIndexRouteImport.update({
   path: '/manager/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MemberHistoryRoute = MemberHistoryRouteImport.update({
+  id: '/member/history',
+  path: '/member/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ManagerRestaurantsRoute = ManagerRestaurantsRouteImport.update({
   id: '/manager/restaurants',
   path: '/manager/restaurants',
@@ -41,6 +54,11 @@ const ManagerRestaurantsRoute = ManagerRestaurantsRouteImport.update({
 const ManagerMapRoute = ManagerMapRouteImport.update({
   id: '/manager/map',
   path: '/manager/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerHistoryRoute = ManagerHistoryRouteImport.update({
+  id: '/manager/history',
+  path: '/manager/history',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MemberSpendIdRoute = MemberSpendIdRouteImport.update({
@@ -61,8 +79,11 @@ const ManagerChargeIdRoute = ManagerChargeIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/manager/history': typeof ManagerHistoryRoute
   '/manager/map': typeof ManagerMapRoute
   '/manager/restaurants': typeof ManagerRestaurantsRoute
+  '/member/history': typeof MemberHistoryRoute
   '/manager/': typeof ManagerIndexRoute
   '/member/': typeof MemberIndexRoute
   '/manager/charge/$id': typeof ManagerChargeIdRoute
@@ -71,8 +92,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/manager/history': typeof ManagerHistoryRoute
   '/manager/map': typeof ManagerMapRoute
   '/manager/restaurants': typeof ManagerRestaurantsRoute
+  '/member/history': typeof MemberHistoryRoute
   '/manager': typeof ManagerIndexRoute
   '/member': typeof MemberIndexRoute
   '/manager/charge/$id': typeof ManagerChargeIdRoute
@@ -82,8 +106,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/manager/history': typeof ManagerHistoryRoute
   '/manager/map': typeof ManagerMapRoute
   '/manager/restaurants': typeof ManagerRestaurantsRoute
+  '/member/history': typeof MemberHistoryRoute
   '/manager/': typeof ManagerIndexRoute
   '/member/': typeof MemberIndexRoute
   '/manager/charge/$id': typeof ManagerChargeIdRoute
@@ -94,8 +121,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/settings'
+    | '/manager/history'
     | '/manager/map'
     | '/manager/restaurants'
+    | '/member/history'
     | '/manager/'
     | '/member/'
     | '/manager/charge/$id'
@@ -104,8 +134,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/settings'
+    | '/manager/history'
     | '/manager/map'
     | '/manager/restaurants'
+    | '/member/history'
     | '/manager'
     | '/member'
     | '/manager/charge/$id'
@@ -114,8 +147,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/settings'
+    | '/manager/history'
     | '/manager/map'
     | '/manager/restaurants'
+    | '/member/history'
     | '/manager/'
     | '/member/'
     | '/manager/charge/$id'
@@ -125,8 +161,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SettingsRoute: typeof SettingsRoute
+  ManagerHistoryRoute: typeof ManagerHistoryRoute
   ManagerMapRoute: typeof ManagerMapRoute
   ManagerRestaurantsRoute: typeof ManagerRestaurantsRoute
+  MemberHistoryRoute: typeof MemberHistoryRoute
   ManagerIndexRoute: typeof ManagerIndexRoute
   MemberIndexRoute: typeof MemberIndexRoute
   ManagerChargeIdRoute: typeof ManagerChargeIdRoute
@@ -136,6 +175,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -157,6 +203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ManagerIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/member/history': {
+      id: '/member/history'
+      path: '/member/history'
+      fullPath: '/member/history'
+      preLoaderRoute: typeof MemberHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/manager/restaurants': {
       id: '/manager/restaurants'
       path: '/manager/restaurants'
@@ -169,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: '/manager/map'
       fullPath: '/manager/map'
       preLoaderRoute: typeof ManagerMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/history': {
+      id: '/manager/history'
+      path: '/manager/history'
+      fullPath: '/manager/history'
+      preLoaderRoute: typeof ManagerHistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/member/spend/$id': {
@@ -197,8 +257,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SettingsRoute: SettingsRoute,
+  ManagerHistoryRoute: ManagerHistoryRoute,
   ManagerMapRoute: ManagerMapRoute,
   ManagerRestaurantsRoute: ManagerRestaurantsRoute,
+  MemberHistoryRoute: MemberHistoryRoute,
   ManagerIndexRoute: ManagerIndexRoute,
   MemberIndexRoute: MemberIndexRoute,
   ManagerChargeIdRoute: ManagerChargeIdRoute,
