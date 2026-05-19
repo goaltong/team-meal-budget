@@ -9,38 +9,179 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MemberIndexRouteImport } from './routes/member.index'
+import { Route as ManagerIndexRouteImport } from './routes/manager.index'
+import { Route as MemberHistoryRouteImport } from './routes/member.history'
+import { Route as ManagerRestaurantsRouteImport } from './routes/manager.restaurants'
+import { Route as ManagerMapRouteImport } from './routes/manager.map'
+import { Route as ManagerHistoryRouteImport } from './routes/manager.history'
+import { Route as MemberSpendIdRouteImport } from './routes/member.spend.$id'
+import { Route as ManagerEditIdRouteImport } from './routes/manager.edit.$id'
+import { Route as ManagerChargeIdRouteImport } from './routes/manager.charge.$id'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MemberIndexRoute = MemberIndexRouteImport.update({
+  id: '/member/',
+  path: '/member/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerIndexRoute = ManagerIndexRouteImport.update({
+  id: '/manager/',
+  path: '/manager/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemberHistoryRoute = MemberHistoryRouteImport.update({
+  id: '/member/history',
+  path: '/member/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerRestaurantsRoute = ManagerRestaurantsRouteImport.update({
+  id: '/manager/restaurants',
+  path: '/manager/restaurants',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerMapRoute = ManagerMapRouteImport.update({
+  id: '/manager/map',
+  path: '/manager/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerHistoryRoute = ManagerHistoryRouteImport.update({
+  id: '/manager/history',
+  path: '/manager/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemberSpendIdRoute = MemberSpendIdRouteImport.update({
+  id: '/member/spend/$id',
+  path: '/member/spend/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerEditIdRoute = ManagerEditIdRouteImport.update({
+  id: '/manager/edit/$id',
+  path: '/manager/edit/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerChargeIdRoute = ManagerChargeIdRouteImport.update({
+  id: '/manager/charge/$id',
+  path: '/manager/charge/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/manager/history': typeof ManagerHistoryRoute
+  '/manager/map': typeof ManagerMapRoute
+  '/manager/restaurants': typeof ManagerRestaurantsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/manager/': typeof ManagerIndexRoute
+  '/member/': typeof MemberIndexRoute
+  '/manager/charge/$id': typeof ManagerChargeIdRoute
+  '/manager/edit/$id': typeof ManagerEditIdRoute
+  '/member/spend/$id': typeof MemberSpendIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/manager/history': typeof ManagerHistoryRoute
+  '/manager/map': typeof ManagerMapRoute
+  '/manager/restaurants': typeof ManagerRestaurantsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/manager': typeof ManagerIndexRoute
+  '/member': typeof MemberIndexRoute
+  '/manager/charge/$id': typeof ManagerChargeIdRoute
+  '/manager/edit/$id': typeof ManagerEditIdRoute
+  '/member/spend/$id': typeof MemberSpendIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/settings': typeof SettingsRoute
+  '/manager/history': typeof ManagerHistoryRoute
+  '/manager/map': typeof ManagerMapRoute
+  '/manager/restaurants': typeof ManagerRestaurantsRoute
+  '/member/history': typeof MemberHistoryRoute
+  '/manager/': typeof ManagerIndexRoute
+  '/member/': typeof MemberIndexRoute
+  '/manager/charge/$id': typeof ManagerChargeIdRoute
+  '/manager/edit/$id': typeof ManagerEditIdRoute
+  '/member/spend/$id': typeof MemberSpendIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/settings'
+    | '/manager/history'
+    | '/manager/map'
+    | '/manager/restaurants'
+    | '/member/history'
+    | '/manager/'
+    | '/member/'
+    | '/manager/charge/$id'
+    | '/manager/edit/$id'
+    | '/member/spend/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/settings'
+    | '/manager/history'
+    | '/manager/map'
+    | '/manager/restaurants'
+    | '/member/history'
+    | '/manager'
+    | '/member'
+    | '/manager/charge/$id'
+    | '/manager/edit/$id'
+    | '/member/spend/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/settings'
+    | '/manager/history'
+    | '/manager/map'
+    | '/manager/restaurants'
+    | '/member/history'
+    | '/manager/'
+    | '/member/'
+    | '/manager/charge/$id'
+    | '/manager/edit/$id'
+    | '/member/spend/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SettingsRoute: typeof SettingsRoute
+  ManagerHistoryRoute: typeof ManagerHistoryRoute
+  ManagerMapRoute: typeof ManagerMapRoute
+  ManagerRestaurantsRoute: typeof ManagerRestaurantsRoute
+  MemberHistoryRoute: typeof MemberHistoryRoute
+  ManagerIndexRoute: typeof ManagerIndexRoute
+  MemberIndexRoute: typeof MemberIndexRoute
+  ManagerChargeIdRoute: typeof ManagerChargeIdRoute
+  ManagerEditIdRoute: typeof ManagerEditIdRoute
+  MemberSpendIdRoute: typeof MemberSpendIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +189,85 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/member/': {
+      id: '/member/'
+      path: '/member'
+      fullPath: '/member/'
+      preLoaderRoute: typeof MemberIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/': {
+      id: '/manager/'
+      path: '/manager'
+      fullPath: '/manager/'
+      preLoaderRoute: typeof ManagerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/member/history': {
+      id: '/member/history'
+      path: '/member/history'
+      fullPath: '/member/history'
+      preLoaderRoute: typeof MemberHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/restaurants': {
+      id: '/manager/restaurants'
+      path: '/manager/restaurants'
+      fullPath: '/manager/restaurants'
+      preLoaderRoute: typeof ManagerRestaurantsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/map': {
+      id: '/manager/map'
+      path: '/manager/map'
+      fullPath: '/manager/map'
+      preLoaderRoute: typeof ManagerMapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/history': {
+      id: '/manager/history'
+      path: '/manager/history'
+      fullPath: '/manager/history'
+      preLoaderRoute: typeof ManagerHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/member/spend/$id': {
+      id: '/member/spend/$id'
+      path: '/member/spend/$id'
+      fullPath: '/member/spend/$id'
+      preLoaderRoute: typeof MemberSpendIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/edit/$id': {
+      id: '/manager/edit/$id'
+      path: '/manager/edit/$id'
+      fullPath: '/manager/edit/$id'
+      preLoaderRoute: typeof ManagerEditIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/charge/$id': {
+      id: '/manager/charge/$id'
+      path: '/manager/charge/$id'
+      fullPath: '/manager/charge/$id'
+      preLoaderRoute: typeof ManagerChargeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SettingsRoute: SettingsRoute,
+  ManagerHistoryRoute: ManagerHistoryRoute,
+  ManagerMapRoute: ManagerMapRoute,
+  ManagerRestaurantsRoute: ManagerRestaurantsRoute,
+  MemberHistoryRoute: MemberHistoryRoute,
+  ManagerIndexRoute: ManagerIndexRoute,
+  MemberIndexRoute: MemberIndexRoute,
+  ManagerChargeIdRoute: ManagerChargeIdRoute,
+  ManagerEditIdRoute: ManagerEditIdRoute,
+  MemberSpendIdRoute: MemberSpendIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
