@@ -14,13 +14,188 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      restaurants: {
+        Row: {
+          address: string | null
+          balance: number
+          created_at: string
+          created_by_nickname: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          memo: string | null
+          name: string
+          status: string
+          team_id: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          balance?: number
+          created_at?: string
+          created_by_nickname?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          memo?: string | null
+          name: string
+          status?: string
+          team_id: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          balance?: number
+          created_at?: string
+          created_by_nickname?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          memo?: string | null
+          name?: string
+          status?: string
+          team_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "restaurants_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          actor_mode: string
+          actor_nickname: string
+          amount: number
+          balance_after: number
+          created_at: string
+          id: string
+          memo: string | null
+          restaurant_id: string
+          team_id: string
+          type: string
+        }
+        Insert: {
+          actor_mode: string
+          actor_nickname: string
+          amount: number
+          balance_after: number
+          created_at?: string
+          id?: string
+          memo?: string | null
+          restaurant_id: string
+          team_id: string
+          type: string
+        }
+        Update: {
+          actor_mode?: string
+          actor_nickname?: string
+          amount?: number
+          balance_after?: number
+          created_at?: string
+          id?: string
+          memo?: string | null
+          restaurant_id?: string
+          team_id?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_restaurant_id_fkey"
+            columns: ["restaurant_id"]
+            isOneToOne: false
+            referencedRelation: "restaurants"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_team_id_fkey"
+            columns: ["team_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      charge_restaurant: {
+        Args: {
+          p_actor_nickname: string
+          p_amount: number
+          p_memo?: string
+          p_restaurant_id: string
+        }
+        Returns: {
+          actor_mode: string
+          actor_nickname: string
+          amount: number
+          balance_after: number
+          created_at: string
+          id: string
+          memo: string | null
+          restaurant_id: string
+          team_id: string
+          type: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "transactions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      spend_restaurant: {
+        Args: {
+          p_actor_nickname: string
+          p_amount: number
+          p_memo?: string
+          p_restaurant_id: string
+        }
+        Returns: {
+          actor_mode: string
+          actor_nickname: string
+          amount: number
+          balance_after: number
+          created_at: string
+          id: string
+          memo: string | null
+          restaurant_id: string
+          team_id: string
+          type: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "transactions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       [_ in never]: never
