@@ -1,7 +1,7 @@
 // Kakao Maps JS SDK loader
 // 주의: Kakao Maps JS SDK는 일반적으로 "JavaScript 키"를 요구합니다.
 // REST API 키만 있는 경우에도 카카오 콘솔에서 "웹" 플랫폼 도메인을 등록하면 동일 키로 동작합니다.
-export const KAKAO_APP_KEY = "8e01e2b60e2834f250faa2af2cccdcde";
+export const KAKAO_APP_KEY = "51846b49d7889576cef2f78a7911a1fc";
 
 let loadPromise: Promise<typeof window.kakao> | null = null;
 
