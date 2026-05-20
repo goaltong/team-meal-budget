@@ -172,18 +172,29 @@ function ManagerRestaurants() {
         onConfirm={handleStop}
         onCancel={() => setStopTarget(null)}
       />
+      <ConfirmModal
+        open={!!delTarget}
+        title="이 식당을 삭제할까요?"
+        description={delTarget ? `'${delTarget.name}'과 모든 거래내역이 영구 삭제됩니다.` : ""}
+        confirmLabel="삭제"
+        destructive
+        onConfirm={handleDelete}
+        onCancel={() => setDelTarget(null)}
+      />
     </AppShell>
   );
 }
 
-function ActionBtn({ icon: Icon, label, onClick, tone }: { icon: typeof Store; label: string; onClick: () => void; tone?: "warn" | "default" }) {
+function ActionBtn({ icon: Icon, label, onClick, tone }: { icon: typeof Store; label: string; onClick: () => void; tone?: "warn" | "danger" | "default" }) {
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center gap-1 rounded-lg py-2 text-xs font-semibold active:scale-95 ${
+      className={`flex flex-col items-center gap-1 rounded-lg py-2 text-[11px] font-semibold active:scale-95 ${
         tone === "warn"
           ? "bg-warning/15 text-warning"
-          : "bg-secondary text-secondary-foreground"
+          : tone === "danger"
+            ? "bg-destructive/10 text-destructive"
+            : "bg-secondary text-secondary-foreground"
       }`}
     >
       <Icon className="h-4 w-4" />
