@@ -5,7 +5,7 @@ import { ConfirmModal } from "@/components/ConfirmModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/session";
 import { formatKRW } from "@/lib/format";
-import { Store, Plus, Wallet, History as HistoryIcon, Power, Edit3 } from "lucide-react";
+import { Store, Plus, Wallet, History as HistoryIcon, Power, Edit3, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/manager/restaurants")({
   component: ManagerRestaurants,
@@ -27,6 +27,7 @@ function ManagerRestaurants() {
   const [monthByR, setMonthByR] = useState<Record<string, number>>({});
   const [lastByR, setLastByR] = useState<Record<string, string>>({});
   const [stopTarget, setStopTarget] = useState<Restaurant | null>(null);
+  const [delTarget, setDelTarget] = useState<Restaurant | null>(null);
   const [loading, setLoading] = useState(true);
 
   const reload = async () => {
@@ -70,6 +71,14 @@ function ManagerRestaurants() {
     const newStatus = stopTarget.status === "active" ? "inactive" : "active";
     await supabase.from("restaurants").update({ status: newStatus }).eq("id", stopTarget.id);
     setStopTarget(null);
+    reload();
+  };
+
+  const handleDelete = async () => {
+    if (!delTarget) return;
+    await supabase.from("transactions").delete().eq("restaurant_id", delTarget.id);
+    await supabase.from("restaurants").delete().eq("id", delTarget.id);
+    setDelTarget(null);
     reload();
   };
 
@@ -137,7 +146,7 @@ function ManagerRestaurants() {
                 </div>
               </div>
 
-              <div className="mt-3 grid grid-cols-4 gap-2">
+              <div className="mt-3 grid grid-cols-5 gap-1.5">
                 <ActionBtn icon={Wallet} label="충전" onClick={() => navigate({ to: "/manager/charge/$id", params: { id: r.id } })} />
                 <ActionBtn icon={HistoryIcon} label="내역" onClick={() => navigate({ to: "/manager/history", search: { restaurantId: r.id } as never })} />
                 <ActionBtn icon={Edit3} label="수정" onClick={() => navigate({ to: "/manager/edit/$id", params: { id: r.id } })} />
@@ -147,6 +156,7 @@ function ManagerRestaurants() {
                   tone={inactive ? "default" : "warn"}
                   onClick={() => setStopTarget(r)}
                 />
+                <ActionBtn icon={Trash2} label="삭제" tone="danger" onClick={() => setDelTarget(r)} />
               </div>
             </div>
           );
@@ -162,18 +172,29 @@ function ManagerRestaurants() {
         onConfirm={handleStop}
         onCancel={() => setStopTarget(null)}
       />
+      <ConfirmModal
+        open={!!delTarget}
+        title="이 식당을 삭제할까요?"
+        description={delTarget ? `'${delTarget.name}'과 모든 거래내역이 영구 삭제됩니다.` : ""}
+        confirmLabel="삭제"
+        destructive
+        onConfirm={handleDelete}
+        onCancel={() => setDelTarget(null)}
+      />
     </AppShell>
   );
 }
 
-function ActionBtn({ icon: Icon, label, onClick, tone }: { icon: typeof Store; label: string; onClick: () => void; tone?: "warn" | "default" }) {
+function ActionBtn({ icon: Icon, label, onClick, tone }: { icon: typeof Store; label: string; onClick: () => void; tone?: "warn" | "danger" | "default" }) {
   return (
     <button
       onClick={onClick}
-      className={`flex flex-col items-center gap-1 rounded-lg py-2 text-xs font-semibold active:scale-95 ${
+      className={`flex flex-col items-center gap-1 rounded-lg py-2 text-[11px] font-semibold active:scale-95 ${
         tone === "warn"
           ? "bg-warning/15 text-warning"
-          : "bg-secondary text-secondary-foreground"
+          : tone === "danger"
+            ? "bg-destructive/10 text-destructive"
+            : "bg-secondary text-secondary-foreground"
       }`}
     >
       <Icon className="h-4 w-4" />

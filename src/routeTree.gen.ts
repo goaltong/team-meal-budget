@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MemberIndexRouteImport } from './routes/member.index'
 import { Route as ManagerIndexRouteImport } from './routes/manager.index'
@@ -24,6 +25,11 @@ import { Route as ManagerChargeIdRouteImport } from './routes/manager.charge.$id
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -79,6 +85,7 @@ const ManagerChargeIdRoute = ManagerChargeIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/settings': typeof SettingsRoute
   '/manager/history': typeof ManagerHistoryRoute
   '/manager/map': typeof ManagerMapRoute
@@ -92,6 +99,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/settings': typeof SettingsRoute
   '/manager/history': typeof ManagerHistoryRoute
   '/manager/map': typeof ManagerMapRoute
@@ -106,6 +114,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/settings': typeof SettingsRoute
   '/manager/history': typeof ManagerHistoryRoute
   '/manager/map': typeof ManagerMapRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/settings'
     | '/manager/history'
     | '/manager/map'
@@ -134,6 +144,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/settings'
     | '/manager/history'
     | '/manager/map'
@@ -147,6 +158,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/settings'
     | '/manager/history'
     | '/manager/map'
@@ -161,6 +173,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   SettingsRoute: typeof SettingsRoute
   ManagerHistoryRoute: typeof ManagerHistoryRoute
   ManagerMapRoute: typeof ManagerMapRoute
@@ -180,6 +193,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -257,6 +277,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   SettingsRoute: SettingsRoute,
   ManagerHistoryRoute: ManagerHistoryRoute,
   ManagerMapRoute: ManagerMapRoute,
