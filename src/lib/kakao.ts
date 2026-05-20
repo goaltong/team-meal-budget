@@ -5,6 +5,11 @@ export const KAKAO_APP_KEY = "51846b49d7889576cef2f78a7911a1fc";
 
 let loadPromise: Promise<typeof window.kakao> | null = null;
 
+function kakaoDomainError() {
+  const origin = typeof window !== "undefined" ? window.location.origin : "현재 도메인";
+  return new Error(`Kakao SDK 로드 실패: 카카오 Developers의 Web 플랫폼 사이트 도메인에 ${origin}을 등록해주세요.`);
+}
+
 declare global {
   interface Window {
     kakao: any;
@@ -13,17 +18,22 @@ declare global {
 
 export function loadKakao(): Promise<any> {
   if (typeof window === "undefined") return Promise.reject(new Error("no window"));
-  if (window.kakao && window.kakao.maps) return Promise.resolve(window.kakao);
+  if (window.kakao?.maps?.Map) return Promise.resolve(window.kakao);
   if (loadPromise) return loadPromise;
 
   loadPromise = new Promise((resolve, reject) => {
     const existing = document.getElementById("kakao-maps-sdk") as HTMLScriptElement | null;
     const onReady = () => {
+      if (!window.kakao?.maps?.load) {
+        reject(kakaoDomainError());
+        return;
+      }
       window.kakao.maps.load(() => resolve(window.kakao));
     };
     if (existing) {
+      if (window.kakao?.maps?.load) onReady();
       existing.addEventListener("load", onReady);
-      existing.addEventListener("error", () => reject(new Error("Kakao SDK 로드 실패")));
+      existing.addEventListener("error", () => reject(kakaoDomainError()));
       return;
     }
     const s = document.createElement("script");
@@ -31,7 +41,7 @@ export function loadKakao(): Promise<any> {
     s.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_APP_KEY}&libraries=services&autoload=false`;
     s.async = true;
     s.onload = onReady;
-    s.onerror = () => reject(new Error("Kakao SDK 로드 실패"));
+    s.onerror = () => reject(kakaoDomainError());
     document.head.appendChild(s);
   });
   return loadPromise;
