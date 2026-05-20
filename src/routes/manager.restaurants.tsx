@@ -74,6 +74,14 @@ function ManagerRestaurants() {
     reload();
   };
 
+  const handleDelete = async () => {
+    if (!delTarget) return;
+    await supabase.from("transactions").delete().eq("restaurant_id", delTarget.id);
+    await supabase.from("restaurants").delete().eq("id", delTarget.id);
+    setDelTarget(null);
+    reload();
+  };
+
   return (
     <AppShell
       title="식당 관리"
@@ -138,7 +146,7 @@ function ManagerRestaurants() {
                 </div>
               </div>
 
-              <div className="mt-3 grid grid-cols-4 gap-2">
+              <div className="mt-3 grid grid-cols-5 gap-1.5">
                 <ActionBtn icon={Wallet} label="충전" onClick={() => navigate({ to: "/manager/charge/$id", params: { id: r.id } })} />
                 <ActionBtn icon={HistoryIcon} label="내역" onClick={() => navigate({ to: "/manager/history", search: { restaurantId: r.id } as never })} />
                 <ActionBtn icon={Edit3} label="수정" onClick={() => navigate({ to: "/manager/edit/$id", params: { id: r.id } })} />
@@ -148,6 +156,7 @@ function ManagerRestaurants() {
                   tone={inactive ? "default" : "warn"}
                   onClick={() => setStopTarget(r)}
                 />
+                <ActionBtn icon={Trash2} label="삭제" tone="danger" onClick={() => setDelTarget(r)} />
               </div>
             </div>
           );
