@@ -5,7 +5,7 @@ import { ConfirmModal } from "@/components/ConfirmModal";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/session";
 import { formatKRW } from "@/lib/format";
-import { Store, Plus, Wallet, History as HistoryIcon, Power, Edit3 } from "lucide-react";
+import { Store, Plus, Wallet, History as HistoryIcon, Power, Edit3, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/manager/restaurants")({
   component: ManagerRestaurants,
@@ -27,6 +27,7 @@ function ManagerRestaurants() {
   const [monthByR, setMonthByR] = useState<Record<string, number>>({});
   const [lastByR, setLastByR] = useState<Record<string, string>>({});
   const [stopTarget, setStopTarget] = useState<Restaurant | null>(null);
+  const [delTarget, setDelTarget] = useState<Restaurant | null>(null);
   const [loading, setLoading] = useState(true);
 
   const reload = async () => {
